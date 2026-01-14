@@ -1,0 +1,6 @@
+[submodule "GestionFormacion"]
+	path = GestionFormacion
+	url = https://github.com/xFeDEV/GestionFormacion.git
+[submodule "GestionFormacionFrontEnd"]
+	path = GestionFormacionFrontEnd
+	url = https://github.com/xFeDEV/GestionFormacionFrontEnd.git
