@@ -1,6 +1,8 @@
 [submodule "GestionFormacion"]
 	path = GestionFormacion
 	url = https://github.com/Juan-D-Wills/GestionFormacion.git
+	branch = main
 [submodule "GestionFormacionFrontEnd"]
 	path = GestionFormacionFrontEnd
 	url = https://github.com/Juan-D-Wills/GestionFormacionFrontEnd.git
+	branch = main
