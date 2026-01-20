@@ -1,0 +1,65 @@
+name: Fullstack_Gestion_Formacion
+
+services:
+  front:
+    container_name: nginx_web_server
+    image: frontend:latest
+    build:
+      context: ./GestionFormacionFrontEnd
+      dockerfile: front.Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - frontend_backend_network
+    depends_on:
+      - back
+
+  back:
+    container_name: fastapi_backend_server
+    image: backend:latest
+    build: 
+      context: ./GestionFormacion
+      dockerfile: back.Dockerfile
+    networks:
+      - frontend_backend_network
+      - backend_db_network
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=12345
+      - DB_NAME=gestion_formacion
+    depends_on:
+      - db
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]
+    stdin_open: true
+    tty: true
+
+  db:
+    container_name: mysql_db
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+      - MYSQL_DATABASE=gestion_formacion
+    volumes:
+      - ./db_schema.sql:/docker-entrypoint-initdb.d/db_schema.sql
+      - mysql_gestion_formacion:/var/lib/mysql
+    networks:
+      - backend_db_network
+    ports:
+      - "3306:3306"
+    stdin_open: true
+    tty: true
+
+networks:
+  frontend_backend_network:
+    driver: bridge
+    driver_opts:
+        com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
+  backend_db_network:
+    driver: bridge
+
+volumes:
+  mysql_gestion_formacion:
