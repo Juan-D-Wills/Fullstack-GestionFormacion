@@ -19,4 +19,4 @@ logs/
 *.temp
 
 # Docker files
-docker-compose.override.yaml
+*.override.y*ml
